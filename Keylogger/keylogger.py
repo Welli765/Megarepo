@@ -1,25 +1,16 @@
 import keyboard
+from time import sleep
 
-keyboard.press_and_release('shift+s, space')
 
-keyboard.write('The quick brown fox jumps over the lazy dog.')
+def wipe_log():
+    with open('tastelog.txt', 'w') as file:     # 'w' for write, så den åbner filen og overskriver det der er i den og wiper den. 
+        file.write("")
 
-keyboard.add_hotkey('ctrl+shift+a', print, args=('triggered', 'hotkey'))
-
-# Press PAGE UP then PAGE DOWN to type "foobar".
-keyboard.add_hotkey('page up, page down', lambda: keyboard.write('foobar'))
-
-# Blocks until you press esc.
+def keylog(strokes):
+    with open('tastelog.txt', 'a') as file:     # 'a' for append, fordi funktionen basically fungerer som et while True loop, og efter hver key press åbner den .txt filen og skriver det ned, så 'a' for append er nødvendigt, ellers ville den wipe det hver gang
+        file.write(str(strokes.name))
+    
+wipe_log()
+keyboard.on_press(keylog)
 keyboard.wait('esc')
-
-# Record events until 'esc' is pressed.
-recorded = keyboard.record(until='esc')
-# Then replay back at three times the speed.
-keyboard.play(recorded, speed_factor=3)
-
-# Type @@ then press space to replace with abbreviation.
-keyboard.add_abbreviation('@@', 'my.long.email@example.com')
-
-# Block forever, like `while True`.
-keyboard.wait()
 
